@@ -1,0 +1,10 @@
+#game{
+    width: 800px;
+    height: 800px;   
+     background-image: url("../Images/0.png");
+    border: 2px solid green;
+
+}
+img{
+    position: absolute;
+}

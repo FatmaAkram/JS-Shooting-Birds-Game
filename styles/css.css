@@ -7,4 +7,5 @@
 }
 img{
     position: absolute;
+/*    -webkit-transform: scale(.5);*/
 }

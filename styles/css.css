@@ -1,11 +1,11 @@
 #game{
-    width: 800px;
+    /* width: 800px; */
     height: 800px;   
-     background-image: url("../Images/0.png");
+     background-image: url("../Images/bg.jpg");
     border: 2px solid green;
 
 }
 img{
     position: absolute;
-/*    -webkit-transform: scale(.5);*/
+    transform: scale(.5);
 }

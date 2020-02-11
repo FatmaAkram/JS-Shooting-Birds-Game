@@ -1,11 +1,29 @@
-#game{
+#game {
     /* width: 800px; */
-    height: 800px;   
-     background-image: url("../Images/bg.jpg");
+    height: 800px;
+    background-image: url("../Images/bg.jpg");
     border: 2px solid green;
 
 }
-img{
+
+#game:hover {
+    cursor: crosshair;
+    /*    cursor: url(../images/cursor.png),auto;*/
+
+}
+
+img {
     position: absolute;
     transform: scale(.5);
+}
+
+.shot {
+    opacity: 0;
+    transition: 0.3s;
+}
+#infoBar{
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    top:-100px;
 }

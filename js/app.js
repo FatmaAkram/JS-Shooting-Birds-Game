@@ -45,7 +45,7 @@ $(function () {
         }
     }
     class Bird extends MovableObject {
-//        #
+        //        #
         birdType;
         constructor(left, top, speed, sprite) {
             super(left, top, speed, sprite);
@@ -110,7 +110,15 @@ $(function () {
     function getRndNumber(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
+    /** Global **/
+    let shotSound = new Audio("sounds/shotSound2.mp3");
+    let bonusSound = new Audio("sounds/bonusSound.mp3");
+    let blackShot = new Audio("sounds/blackShot.mp3");
+    let normalShot = new Audio("sounds/normalShot.mp3");
+
+
     let score = 0;
+
     images = ["images/normalBird.gif", "images/bonusBird.gif", "images/blackBird.gif"];
     LeftRight = ["left", "right"];
     var ducks = [];
@@ -142,19 +150,36 @@ $(function () {
         preLocation = randTop;
     }, 1000);
 
-    //    game.addEventListener("click", function (event) {
-    //        //        console.log(event.target);
-    //
-    //    });
-    $("#game").on("click", "img", function () {
-        //                      console.log( $(this)[0]);
-        switch () {
-
+    $("#game").on("click", function () {
+        shotSound.play();
+        for(let i=0;i<ducks.length;i++){
+          console.log(ducks[i]);  
         }
-        $(this).fadeOut(500);
+    });
+    $("#game").on("click", "img", function () {
+        updateScore($(this));
+        //        $(this).animateRotate(360);
+        //        $(this).fadeOut(500);
+//        $(this).animate({
+//            queue: false,
+//            top: "+=300"
+//        }, 2000);
+        $(this).fadeOut(1000);
     });
 
-
-
+    function updateScore(clickedBird) {
+        if (clickedBird.hasClass("normalBird")) {
+            score += 5;
+            clickedBird.attr("src", "images/fireBird.gif");
+            normalShot.play();
+        } else if (clickedBird.hasClass("bonusBird")) {
+            score += 10;
+            bonusSound.play();
+        } else if (clickedBird.hasClass("blackBird")) {
+            score -= 10;
+            blackShot.play();
+        }
+        $("label[name=score]").text(score);
+    }
 
 });

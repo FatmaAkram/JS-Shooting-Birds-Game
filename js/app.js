@@ -66,7 +66,8 @@ $(function () {
             var bird=super.Bird;
             var speed=super.Speed;
             var RandLeftRight=randLeftRight;
-            var w = window.innerWidth;
+            var width = window.innerWidth;
+            var height = window.innerHeight;
             var left ;
             var request;
             var lastTime= Date.now();
@@ -79,33 +80,45 @@ $(function () {
             }
             else if(RandLeftRight === "right")
             {
-                bird.style.left=(w)+"px";
-                bird.style.transform= "scaleX(-1) scale(.5)";
+                bird.style.left=(width-150)+"px";
+                bird.style.transform= "scaleX(-1) scale(.3)";
                 left = parseInt(bird.style.left);
             }
             function birdsMovement()
             {
                     var now = Date.now();
-                    console.log(game);
-                     console.log(bird);
+                    // console.log(game);
+                    // console.log(bird.parentNode);
                     var dt=(now - lastTime) / 1000.0;
                     var top=parseInt(bird.style.top);
                     if(RandLeftRight =="left")
                     {               
-                        if(left>=w)
-                        {window.cancelAnimationFrame(request);}    
+                        if(left>=width-150)
+                        {
+                            window.cancelAnimationFrame(request);                   
+                            if(bird.parentNode != null)
+                                bird.parentNode.removeChild(bird);
+                        }    
                         left += 100*speed*dt;
                         if(left >200)top-=20*speed*dt;               
                     }
                     else if(RandLeftRight =="right")
                     {   
-                        if(left==0) {window.cancelAnimationFrame(request);}                 
+                        if(left==0) {
+                            window.cancelAnimationFrame(request);
+                            if(bird.parentNode != null)
+                                bird.parentNode.removeChild(bird);
+                            }                 
                         left -= 100*speed*dt;
                         if(left <300)
                         {top+=20*speed*dt;}
                     }
                             
-                    if(top>800) {window.cancelAnimationFrame(request);} 
+                    if(top>height-100) {
+                        window.cancelAnimationFrame(request);
+                        if(bird.parentNode != null)
+                            bird.parentNode.removeChild(bird);
+                        } 
                     bird.style.top = top + "px";
                     bird.style.left = left + "px";
                     lastTime=now;
@@ -135,8 +148,9 @@ $(function () {
             ducks[i] = new Bird(-100, locations[randTop], 2, images[randbird]);
             ducks[i].move(LeftRight[randLeftRight]);
             i++;
+            // if(i == 10)clearInterval(id);
             preLocation=randTop;
-    },1000);
+    },800);
     
      
 

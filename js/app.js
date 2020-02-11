@@ -111,7 +111,7 @@ $(function () {
         return Math.floor(Math.random() * (max - min)) + min;
     }
     /** Global **/
-    let shotSound = new Audio("sounds/shotSound2.mp3");
+    let shotSound = new Audio("sounds/shotSound.mp3");
     let bonusSound = new Audio("sounds/bonusSound.mp3");
     let blackShot = new Audio("sounds/blackShot.mp3");
     let normalShot = new Audio("sounds/normalShot.mp3");
@@ -152,6 +152,7 @@ $(function () {
 
     $("#game").on("click", function () {
         shotSound.play();
+        let currentBirds = $("img");
         for(let i=0;i<ducks.length;i++){
           console.log(ducks[i]);  
         }

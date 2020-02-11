@@ -2,7 +2,7 @@ body{
     font-family: fantasy;
 }
 #game {
-    /* width: 800px; */
+/*     width: 800px; */
     height: 800px;
     background-image: url("../Images/bg1.png");
     border: 2px solid green;

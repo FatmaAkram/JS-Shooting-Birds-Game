@@ -1,8 +1,9 @@
-body{
+body {
     font-family: fantasy;
 }
+
 #game {
-/*     width: 800px; */
+    /*     width: 800px; */
     height: 800px;
     background-image: url("../Images/bg1.png");
     border: 2px solid green;
@@ -13,9 +14,11 @@ body{
 img {
     position: absolute;
     transform: scale(.5);
+    user-select: none;
+
 }
 
-nav{
+nav {
     height: 30px;
     background: black;
     color: white;
@@ -23,7 +26,14 @@ nav{
     letter-spacing: 5px;
     padding: 20px;
     text-align: center;
+    display: flex;
 }
-label[name=score]{
+#timer{
+    width: 40%;
+}
+#playerInfo{
+    width: 60%;
+}
+label[name=score],label[name=playername] {
     color: red;
 }

@@ -13,7 +13,7 @@ function getRndNumber(min, max) {
 }
 /** Global **/
 let score = 0;
-let images = ["images/normalBird.gif", "images/bonusBird.gif", "images/blackBird.gif"];
+let images = ["Images/normalBird.gif", "Images/bonusBird.gif", "Images/blackBird.gif"];
 let LeftRight = ["left", "right"];
 let ducks = [];
 let i = 0;

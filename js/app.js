@@ -89,7 +89,7 @@ function updateScore(clickedBird) {
 
     if (clickedBird.hasClass("normalBird")) {
         currentPlayer.Score += 5;
-        clickedBird.attr("src", "images/fireBird.gif");
+        clickedBird.attr("src", "Images/fireBird.gif");
         Sounds.normalShot.play();
     } else if (clickedBird.hasClass("bonusBird")) {
         currentPlayer.Score += 10;

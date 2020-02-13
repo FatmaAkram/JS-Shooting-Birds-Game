@@ -47,26 +47,30 @@ $(function () {
     class Bird extends MovableObject {
         //        #
         birdType;
+        flag;
         constructor(left, top, speed, sprite) {
             super(left, top, speed, sprite);
-
+            this.flag=false;
         }
         getType() {
             return this.birdType = this.sprite.split('/')[1].split('.')[0];
         }
-
-        move(randLeftRight)
+        RemoveBird(bird)
+        {
+            
+        }
+        move(randLeftRight,Flag)
         {
             var bird=super.Bird;
             var speed=super.Speed;
             var RandLeftRight=randLeftRight;
             var width = window.innerWidth;
             var height = window.innerHeight;
-            var left ;
-            var request;
+            var left ,index,request;
+            var self=this;
             var lastTime = Date.now();
+            this.flag=Flag;
             var game = document.getElementById("game");
-            // console.log(game);
             // console.log(bird);
             if(RandLeftRight === "left")
             {
@@ -81,50 +85,92 @@ $(function () {
             function birdsMovement()
             {
                     var now = Date.now();
-                    // console.log(game);
-                    // console.log(bird.parentNode);
                     var dt=(now - lastTime) / 1000.0;
                     var top=parseInt(bird.style.top);
                     if(RandLeftRight =="left")
-                    {               
+                    {              
                         if(left>=width-150)
-                        {
-                            window.cancelAnimationFrame(request);                   
+                        {   
+                            self.flag=false;                 
                             if(bird.parentNode != null)
+                            {
                                 bird.parentNode.removeChild(bird);
-                        }    
-                        left += 100*speed*dt;
-                        if(left >200)top-=20*speed*dt;               
+                                index=ducks.indexOf(self);
+                                if(index>-1)ducks.splice(index, 1);
+                                console.log(ducks);
+                            }                                
+                        }
+                        else
+                        {
+                            left += 100*speed*dt;
+                            if(left >200)top-=20*speed*dt;
+                        }                                           
                     }
                     else if(RandLeftRight =="right")
-                    {   
-                        if(left==0) {
-                            window.cancelAnimationFrame(request);
+                    {                           
+                        if(left<=0) {
+                            self.flag=false;
                             if(bird.parentNode != null)
+                            {
                                 bird.parentNode.removeChild(bird);
-                            }                 
-                        left -= 100*speed*dt;
-                        if(left <300)
-                        {top+=20*speed*dt;}
+                                index=ducks.indexOf(self);
+                                if(index>-1)ducks.splice(index, 1);
+                                console.log(ducks);
+                            }
+                        }
+                        else
+                        {
+                            left -= 100*speed*dt;
+                            if(left <300)
+                            {top+=20*speed*dt;}
+                        }                                         
                     }
                             
                     if(top>height-100) {
-                        window.cancelAnimationFrame(request);
+                        self.flag=false;
                         if(bird.parentNode != null)
+                        {
                             bird.parentNode.removeChild(bird);
-                        } 
-                    bird.style.top = top + "px";
-                    bird.style.left = left + "px";
-                    lastTime=now;
-                    window.requestAnimationFrame(birdsMovement)
+                            index=ducks.indexOf(self);
+                            if(index>-1)ducks.splice(index, 1);
+                            console.log(ducks);
+                        }
+                    } 
+                    else{
+                        bird.style.top = top + "px";
+                        bird.style.left = left + "px";
+                        lastTime=now;
+                    }
+                    if(self.flag){
+                        request=window.requestAnimationFrame(birdsMovement);
+                    }
+                    
             }
-            request = window.requestAnimationFrame(birdsMovement);
+            birdsMovement();
         }
     }
 
     function getRndNumber(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
+    function timer()
+    {   
+        var duration = 60*1000;
+        var st=new Date().getTime();
+        $( "#progressbar" ).css("width","150");       
+        $( "#progressbar" ).progressbar(100);
+        var id=setInterval(function()
+        { 
+            var diff = Math.round(new Date().getTime() - st);
+            $( "#progressbar > div" ).css('background','green'); 
+            val = Math.round(diff / duration *100);
+            if(val > 80)$( "#progressbar > div" ).css('background','red'); 
+            $( "#progressbar" ).progressbar({
+                value:100-val })
+            }, 100);
+        return id; 
+    }
+
     /** Global **/
     let shotSound = new Audio("sounds/shotSound.mp3");
     let bonusSound = new Audio("sounds/bonusSound.mp3");
@@ -140,13 +186,15 @@ $(function () {
     i = 0;
     locations = [50, 400];
     var preLocation = 0;
+    var timerId= timer();
+    var birdIntervalId;
     var id = setInterval(function () {
         do {
             randTop = getRndNumber(0, 2);
         } while (randTop == preLocation)
         randLeftRight = getRndNumber(0, 2);
         randbird = getRndNumber(0, 3);
-        ducks[i] = new Bird(-100, locations[randTop], 2, images[randbird]);
+        ducks[i]=new Bird(-100, locations[randTop], 2, images[randbird]);
         //                                console.log(ducks[i].Bird);
 
         switch (ducks[i].getType()) {
@@ -160,11 +208,20 @@ $(function () {
                 ducks[i].Bird.classList.add("blackBird");
                 break;
         }
-        ducks[i].move(LeftRight[randLeftRight]);
+        ducks[i].move(LeftRight[randLeftRight],true);
         i++;
         preLocation = randTop;
     }, 1000);
-
+    setTimeout(function(){
+        clearInterval(id);
+        clearInterval(timerId);
+        ducks.forEach(element => {
+            element.flag=false;
+               
+            });
+        console.log("the End")
+    },60000)
+    // console.log(ducks)
     $("#game").on("click", function () {
         shotSound.play();
         let currentBirds = $("img");

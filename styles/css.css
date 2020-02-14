@@ -2,18 +2,14 @@ body {
     font-family: sans-serif;
     font-size: 30px;
     font-weight: bold;
-    /*    letter-spacing: 5px;*/
 }
 
 #game {
-    /*     width: 800px; */
     height: 570px;
     background-image: url("../Images/Hbg.png");
     border: 2px solid green;
     cursor: url('../Images/objetive.png'), pointer;
-
 }
-
 img {
     position: absolute;
     transform: scale(.5);

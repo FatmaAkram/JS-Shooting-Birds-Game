@@ -16,7 +16,6 @@ class Player {
         this.score = playerScore;
     }
     saveData(users, currentPlayerId) {
-        console.log(users + " " + currentPlayerId);
         users[currentPlayerId].score = this.score;
         localStorage.setItem("users", JSON.stringify(users));
     }

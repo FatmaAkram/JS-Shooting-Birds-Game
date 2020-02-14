@@ -29,14 +29,15 @@ let users;
 let id, timerId;
 let endId;
 let level = 2;
-let duration=60 * 1000;
+let duration = 60 * 1000;
 let speed;
+let countBirds = 0;
 
 $("#start").on("click", function () {
     initGame();
     $("#startWrapper").css("visibility", "hidden");
     $("#start").css("visibility", "hidden");
-    
+
 });
 
 function initGame() {
@@ -67,13 +68,12 @@ function getPreviousScore() {
 }
 
 function renderGame() {
-	if(level ==1)
-		speed=2;
-    else if(level ==2)
-    {
-        speed=4;
+    if (level == 1)
+        speed = 2;
+    else if (level == 2) {
+        speed = 4;
         GetBomb();
-    }       
+    }
     let id = setInterval(function () {
         let randTop, randLeftRight, randbird;
         do {
@@ -96,8 +96,18 @@ function renderGame() {
         ducks[i].move(LeftRight[randLeftRight]);
         //         console.log($(ducks[i].Bird));
         $(ducks[i].Bird).on("click", function () {
+            countBirds++;
             updateScore($(this));
             $(this).fadeOut(1000);
+            console.log("countBirds " + countBirds);
+            if (countBirds > 20) {
+                clearInterval(id);
+                clearInterval(timerId);
+                bombs.forEach(element => {
+                    element.flag = false;
+                });
+                winningModal();
+            }
         });
         i++;
         preLocation = randTop;
@@ -105,15 +115,15 @@ function renderGame() {
     return id;
 }
 let bombs = [];
-function GetBomb()
-{
-    let bombLocations = [100, 200, 300, 400, 500, 600, 700, 800,1000];
+
+function GetBomb() {
+    let bombLocations = [100, 200, 300, 400, 500, 600, 700, 800, 1000];
     let bombTimes = [4000, 1200, 3600, 6000, 5000];
-    
+
     let j = 0;
     let bombTime;
     let preBombTime;
-    setInterval(function() {
+    setInterval(function () {
         let randLeft = getRndNumber(0, 8);
         let bombTime = getRndNumber(0, 5);
         setTimeout(function () {
@@ -132,8 +142,8 @@ function GetBomb()
             bombs = bombs[i].move(true, bombs);
             //        console.log(bombs);
         }, bombTimes[bombTime]);
-     
-     },10000);
+
+    }, 10000);
 }
 $("#game").on("click", function () {
     Sounds.shotSound.play();

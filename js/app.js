@@ -26,7 +26,7 @@ let currentPlayer;
 let currentPlayerId;
 let save = true;
 let users;
-let id, timerId;
+let id, timerId,BombId;
 let endId;
 let level = 2;
 let duration = 60 * 1000;
@@ -101,12 +101,7 @@ function renderGame() {
             $(this).fadeOut(1000);
             console.log("countBirds " + countBirds);
             if (countBirds > 20) {
-                clearInterval(id);
-                clearInterval(timerId);
-                bombs.forEach(element => {
-                    element.flag = false;
-                });
-                winningModal();
+               endAll();
             }
         });
         i++;
@@ -123,7 +118,8 @@ function GetBomb() {
     let j = 0;
     let bombTime;
     let preBombTime;
-    setInterval(function () {
+
+    BombId=setInterval(function() {
         let randLeft = getRndNumber(0, 8);
         let bombTime = getRndNumber(0, 5);
         setTimeout(function () {
@@ -205,7 +201,13 @@ function timer() {
 //end game
 function endGame() {
     let endId = setTimeout(function () {
-        //stop birds appearance
+        endAll();
+    }, duration);
+    return endId;
+}
+
+function endAll(){
+   //stop birds appearance
         clearInterval(id);
         //stop timer
         clearInterval(timerId);
@@ -213,15 +215,13 @@ function endGame() {
         //    ducks.forEach(element => {
         //        element.flag = false;
         //    });
+        clearInterval(BombId);
         bombs.forEach(element => {
             element.flag = false;
         });
         winningModal();
-        console.log("the End")
-    }, duration);
-    return endId;
+        console.log("the End") 
 }
-
 
 $("#home").on("click", function () {
     window.location.href = "index.html";

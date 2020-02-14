@@ -20,7 +20,7 @@ let images = ["Images/normalBird.gif", "Images/bonusBird.gif", "Images/blackBird
 let LeftRight = ["left", "right"];
 let ducks = [];
 let i = 0;
-let locations = [50, 400];
+let locations = [50, 300];
 let preLocation = 0;
 let currentPlayer;
 let currentPlayerId;
@@ -28,8 +28,9 @@ let save = true;
 let users;
 let id, timerId;
 let endId;
-let level = 1;
+let level = 2;
 let duration=60 * 1000;
+let speed;
 initGame();
 
 function initGame() {
@@ -60,6 +61,13 @@ function getPreviousScore() {
 }
 
 function renderGame() {
+	if(level ==1)
+		speed=2;
+    else if(level ==2)
+    {
+        speed=4;
+        GetBomb();
+    }       
     let id = setInterval(function () {
         let randTop, randLeftRight, randbird;
         do {
@@ -67,7 +75,7 @@ function renderGame() {
         } while (randTop == preLocation)
         randLeftRight = getRndNumber(0, 2);
         randbird = getRndNumber(0, 3);
-        ducks[i] = new Bird(-100, locations[randTop], 2, images[randbird]);
+        ducks[i] = new Bird(-100, locations[randTop], speed, images[randbird]);
         switch (ducks[i].getType()) {
             case "normalBird":
                 ducks[i].Bird.classList.add("normalBird");
@@ -90,40 +98,17 @@ function renderGame() {
     }, 500);
     return id;
 }
-
-//do {
-//    let randLeft = getRndNumber(0, 7);
-//    do {
-//        bombTime = getRndNumber(0, 5);
-//    } while (preBombTime == bombTime);
-//    setTimeout(function () {
-//        bombs[j] = new Bomb(bombLocations[randLeft], -100, 1, "Images/bomb.png");
-//        $(bombs[j].Bird).addClass("bomb");
-//        bombs = bombs[j].move(true, bombs);
-//        j++;
-//        preBombTime = bombTime;
-//        $(bombs[j].Bird).on("click", function () {
-//            let jBomb = $(bombs[j].Bird);
-//            let bombLeft = parseInt(jBomb.css("left"));
-//            let bombTop = parseInt(jBomb.css("top"));
-//            //            console.log(bombLeft+" "+bombTop);
-//            console.log(jBomb);
-//            jBomb.attr("src", "../Images/bombExplode.gif")
-//            handleBomb(bombLeft, bombTop);
-//        });
-//    }, bombTimes[bombTime]);
-//} while (j < 5);
 let bombs = [];
 function GetBomb()
 {
-    let bombLocations = [100, 200, 300, 400, 500, 600, 700, 800];
+    let bombLocations = [100, 200, 300, 400, 500, 600, 700, 800,1000];
     let bombTimes = [4000, 1200, 3600, 6000, 5000];
     
     let j = 0;
     let bombTime;
     let preBombTime;
     setInterval(function() {
-        let randLeft = getRndNumber(0, 7);
+        let randLeft = getRndNumber(0, 8);
         let bombTime = getRndNumber(0, 5);
         setTimeout(function () {
             //        console.log("randLeft "+bombLocations[randLeft]+ " bombTimes "+bombTimes[bombTime]);
@@ -144,7 +129,6 @@ function GetBomb()
      
      },10000);
 }
-GetBomb();
 $("#game").on("click", function () {
     Sounds.shotSound.play();
 });

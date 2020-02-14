@@ -39,9 +39,18 @@ class Bird extends MovableObject {
                         bird.parentNode.removeChild(bird);
                 }
                 left += 100 * speed * dt;
-                if (left > 200) top -= 20 * speed * dt;
+                if (left > 200)
+                {
+                    top += 20 * speed * dt;
+                    if(top >= height)
+                    {
+                        window.cancelAnimationFrame(request);
+                        if (bird.parentNode != null)
+                            bird.parentNode.removeChild(bird);
+                    }
+                } 
             } else if (RandLeftRight == "right") {
-                if (left == 0) {
+                if (left <= 0) {
                     window.cancelAnimationFrame(request);
                     if (bird.parentNode != null)
                         bird.parentNode.removeChild(bird);
@@ -49,6 +58,12 @@ class Bird extends MovableObject {
                 left -= 100 * speed * dt;
                 if (left < 300) {
                     top += 20 * speed * dt;
+                    if(top >= height)
+                    {
+                        window.cancelAnimationFrame(request);
+                        if (bird.parentNode != null)
+                            bird.parentNode.removeChild(bird);
+                    }
                 }
             }
 

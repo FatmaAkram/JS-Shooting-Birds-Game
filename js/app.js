@@ -134,9 +134,8 @@ function handleBomb(bombLeft, bombTop) {
     $("img").toArray().forEach(function (item) {
         let birdLeft = parseInt($(item).css("left"));
         let birdTop = parseInt($(item).css("top"));
-        if (birdLeft > bombLeft && birdLeft < bombLeft + 300 &&
-            birdTop > bombTop && birdTop < bombTop + 300) {
-            $(item).css("background", "red");
+        if (birdLeft > bombLeft && birdLeft < bombLeft + 200 &&
+            birdTop > bombTop && birdTop < bombTop + 200) {
             $(item).trigger("click");
         }
     });

@@ -1,6 +1,6 @@
 import {MovableObject} from "./MovableObject.js";
 class Bird extends MovableObject {
-    birdType;
+    #birdType;
     constructor(left, top, speed, sprite) {
         super(left, top, speed, sprite);
     }

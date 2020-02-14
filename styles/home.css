@@ -1,0 +1,81 @@
+body {
+    background: url(../Images/Hbg.png);
+    /*    background-size: cover;*/
+    font-family: fantasy;
+    color: white;
+    font-size: 30px;
+    letter-spacing: 5px;
+    user-select: none;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+#login {
+    width: 366px;
+    margin-top: 5%;
+    padding: 50px;
+    /*    padding-top: 100px;*/
+    height: 433px;
+    /*    background-color: red;*/
+    background: url(../Images/modal.svg);
+    background-size: cover;
+    text-align: center;
+}
+
+input[name="username"] {
+    width: 90%;
+    height: 40px;
+    border-radius: 50px;
+    border: none;
+    /*    box-shadow: #073d6f 5px 5px 5px;*/
+    margin: 10px 0;
+    padding-left: 20px;
+    font-size: 20px;
+    color: #073d6f;
+
+}
+
+input[name="username"]:focus {
+    outline: none;
+    box-shadow: #073d6f 5px 5px 5px;
+}
+
+#modal {
+    opacity: 100%;
+}
+
+#level1,
+#level2,
+#loginBtn {
+    width: 154px;
+    height: 86px;
+    border: none;
+    opacity: .92;
+    outline: none;
+
+
+}
+
+#level1 {
+    background: url(../Images/level1.png) no-repeat;
+
+}
+
+#level2 {
+    background: url(../Images/level2.png) no-repeat;
+
+}
+
+#level1:hover,
+#level2:hover,
+#loginBtn:hover {
+    opacity: 1;
+}
+
+#loginBtn {
+    background: url(../Images/login.png) no-repeat;
+
+}

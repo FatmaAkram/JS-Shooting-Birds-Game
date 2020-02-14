@@ -7,7 +7,7 @@ body {
     height: 800px;
     background-image: url("../Images/bg1.png");
     border: 2px solid green;
-    cursor: url('../images/objetive.png'), pointer;
+    cursor: url('../Images/objetive.png'), pointer;
 
 }
 

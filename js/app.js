@@ -203,6 +203,7 @@ $("#home").on("click", function () {
 $("#play").on("click", function () {
     clearInterval(endId);
     initGame();
+    countBirds =0;
     $("#container").css("visibility", "hidden");
     $("#contents").css("visibility", "hidden");
 });

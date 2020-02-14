@@ -26,7 +26,7 @@ let currentPlayer;
 let currentPlayerId;
 let save = true;
 let users;
-let id, timerId;
+let id, timerId,BombId;
 let endId;
 let level = 2;
 let duration=60 * 1000;
@@ -113,7 +113,7 @@ function GetBomb()
     let j = 0;
     let bombTime;
     let preBombTime;
-    setInterval(function() {
+    BombId=setInterval(function() {
         let randLeft = getRndNumber(0, 8);
         let bombTime = getRndNumber(0, 5);
         setTimeout(function () {
@@ -203,6 +203,7 @@ function endGame() {
         //    ducks.forEach(element => {
         //        element.flag = false;
         //    });
+        clearInterval(BombId);
         bombs.forEach(element => {
             element.flag = false;
         });

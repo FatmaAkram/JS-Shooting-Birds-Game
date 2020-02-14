@@ -22,7 +22,7 @@ class Bird extends MovableObject {
         if (RandLeftRight === "left") {
             left = parseInt(bird.style.left);
         } else if (RandLeftRight === "right") {
-            bird.style.left = (width - 150) + "px";
+            bird.style.left = (width - 180) + "px";
             bird.style.transform = "scaleX(-1) scale(.5)";
             left = parseInt(bird.style.left);
         }
@@ -33,7 +33,7 @@ class Bird extends MovableObject {
             var dt = (now - lastTime) / 1000.0;
             var top = parseInt(bird.style.top);
             if (RandLeftRight == "left") {
-                if (left >= width - 150) {
+                if (left >= width - 180) {
                     window.cancelAnimationFrame(request);
                     if (bird.parentNode != null)
                         bird.parentNode.removeChild(bird);

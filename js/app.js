@@ -27,13 +27,14 @@ let currentPlayerId;
 let save = true;
 let users;
 let id, timerId;
-let flag =
-    initGame();
+let endId;
+initGame();
 
 function initGame() {
     getPreviousScore();
     id = renderGame();
     timerId = timer();
+    endId =endGame();
 }
 
 function getPreviousScore() {
@@ -73,37 +74,87 @@ function renderGame() {
                 break;
         }
         ducks[i].move(LeftRight[randLeftRight]);
+        //         console.log($(ducks[i].Bird));
+        $(ducks[i].Bird).on("click", function () {
+            updateScore($(this));
+            $(this).fadeOut(1000);
+        });
         i++;
         preLocation = randTop;
-    }, 1000);
+    }, 500);
     return id;
 }
 let bombLocations = [100, 200, 300, 400, 500, 600, 700, 800];
-let bombTimes = [4000, 12000, 36000, 60000, 50000];
+let bombTimes = [4000, 1200, 3600, 6000, 5000];
 let bombs = [];
-for (let i = 0; i < 5; i++) {
-    let randLeft = getRndNumber(0, 7);
-    let bombTime = getRndNumber(0, 5);
-    setTimeout(function () {
-        //        console.log("randLeft "+bombLocations[randLeft]+ " bombTimes "+bombTimes[bombTime]);
-        bombs[i] = new Bomb(bombLocations[randLeft], -100, 2, "Images/bomb.png");
-        bombs[i].Bird.classList.add("bomb");
-        bombs = bombs[i].move(true, bombs);
-        //        console.log(bombs);
-    }, bombTimes[bombTime]);
+let j = 0;
+let bombTime;
+let preBombTime;
+//do {
+//    let randLeft = getRndNumber(0, 7);
+//    do {
+//        bombTime = getRndNumber(0, 5);
+//    } while (preBombTime == bombTime);
+//    setTimeout(function () {
+//        bombs[j] = new Bomb(bombLocations[randLeft], -100, 1, "Images/bomb.png");
+//        $(bombs[j].Bird).addClass("bomb");
+//        bombs = bombs[j].move(true, bombs);
+//        j++;
+//        preBombTime = bombTime;
+//        $(bombs[j].Bird).on("click", function () {
+//            let jBomb = $(bombs[j].Bird);
+//            let bombLeft = parseInt(jBomb.css("left"));
+//            let bombTop = parseInt(jBomb.css("top"));
+//            //            console.log(bombLeft+" "+bombTop);
+//            console.log(jBomb);
+//            jBomb.attr("src", "../Images/bombExplode.gif")
+//            handleBomb(bombLeft, bombTop);
+//        });
+//    }, bombTimes[bombTime]);
+//} while (j < 5);
 
-}
+
+//for (let i = 0; i < 10; i++) {
+//    let randLeft = getRndNumber(0, 7);
+//    let bombTime = getRndNumber(0, 5);
+//    setTimeout(function () {
+//        //        console.log("randLeft "+bombLocations[randLeft]+ " bombTimes "+bombTimes[bombTime]);
+//        bombs[i] = new Bomb(bombLocations[randLeft], -100, 1, "Images/bomb.png");
+//        $(bombs[i].Bird).addClass("bomb");
+//        $(bombs[i].Bird).on("click", function () {
+//            let jBomb = $(bombs[i].Bird);
+//            let bombLeft = parseInt(jBomb.css("left"));
+//            let bombTop = parseInt(jBomb.css("top"));
+//            //            console.log(bombLeft+" "+bombTop);
+//            console.log(jBomb);
+//            jBomb.attr("src", "../Images/bombExplode.gif")
+//            handleBomb(bombLeft, bombTop);
+//        });
+//        bombs = bombs[i].move(true, bombs);
+//        //        console.log(bombs);
+//    }, bombTimes[bombTime]);
+//
+//}
 $("#game").on("click", function () {
     Sounds.shotSound.play();
 });
-$("#game").on("click", "img", function () {
-    updateScore($(this));
-    $(this).fadeOut(200);
 
-});
+function handleBomb(bombLeft, bombTop) {
+    $("img").toArray().forEach(function (item) {
+
+        let birdLeft = parseInt($(item).css("left"));
+        let birdTop = parseInt($(item).css("top"));
+        //        console.log(birdLeft+" "+birdTop);
+        if (birdLeft > bombLeft && birdLeft < bombLeft + 300 &&
+            birdTop > bombTop && birdTop < bombTop + 300) {
+            $(item).css("background", "red");
+            $(item).trigger("click");
+        }
+        
+    });
+}
 
 function updateScore(clickedBird) {
-
     if (clickedBird.hasClass("normalBird")) {
         currentPlayer.Score += 5;
         clickedBird.attr("src", "Images/fireBird.gif");
@@ -114,7 +165,6 @@ function updateScore(clickedBird) {
     } else if (clickedBird.hasClass("blackBird")) {
         currentPlayer.Score -= 10;
         Sounds.blackShot.play();
-
     }
     $("label[name=score]").text(currentPlayer.Score);
     if (save) {
@@ -135,7 +185,7 @@ function timer() {
     $("#progressbar").progressbar(100);
     let id = setInterval(function () {
         let diff = Math.round(new Date().getTime() - st);
-        $("#progressbar > div").css('background', 'green');
+        $("#progressbar > div").css('background', '#1f9bdb');
         let val = Math.round(diff / duration * 100);
         if (val > 80) $("#progressbar > div").css('background', 'red');
         $("#progressbar").progressbar({
@@ -145,18 +195,32 @@ function timer() {
     return id;
 }
 //end game
-setTimeout(function () {
-    //stop birds appearance
-    clearInterval(id);
-    //stop timer
-    clearInterval(timerId);
-    //stop moving birds
-    //    ducks.forEach(element => {
-    //        element.flag = false;
-    //    });
-    bombs.forEach(element => {
-        element.flag = false;
-    });
-    winningModal();
-    console.log("the End")
-}, 60000)
+function endGame() {
+   let endId = setTimeout(function () {
+        //stop birds appearance
+        clearInterval(id);
+        //stop timer
+        clearInterval(timerId);
+        //stop moving birds
+        //    ducks.forEach(element => {
+        //        element.flag = false;
+        //    });
+        bombs.forEach(element => {
+            element.flag = false;
+        });
+        winningModal();
+        console.log("the End")
+    }, 5000);
+    return endId;
+}
+
+
+$("#home").on("click", function () {
+    window.location.href = "index.html";
+});
+$("#play").on("click", function () {
+    clearInterval(endId);
+    initGame();
+    $("#container").css("visibility", "hidden");
+    $("#contents").css("visibility", "hidden");
+});

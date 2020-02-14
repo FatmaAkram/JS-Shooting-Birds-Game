@@ -26,7 +26,7 @@ class Player {
         //        localStorage.setItem(this.name, JSON.stringify(playerScore));
         localStorage.setItem("users", JSON.stringify(users));
 //        localStorage.setItem("currentPlayer", "");
-        localStorage.removeItem("currentPlayer");
+//        localStorage.removeItem("currentPlayer");
 
 
     }

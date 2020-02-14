@@ -29,6 +29,7 @@ let users;
 let id, timerId;
 let endId;
 let level = 1;
+let duration=60 * 1000;
 initGame();
 
 function initGame() {
@@ -89,12 +90,7 @@ function renderGame() {
     }, 500);
     return id;
 }
-let bombLocations = [100, 200, 300, 400, 500, 600, 700, 800];
-let bombTimes = [4000, 1200, 3600, 6000, 5000];
-let bombs = [];
-let j = 0;
-let bombTime;
-let preBombTime;
+
 //do {
 //    let randLeft = getRndNumber(0, 7);
 //    do {
@@ -117,29 +113,38 @@ let preBombTime;
 //        });
 //    }, bombTimes[bombTime]);
 //} while (j < 5);
-
-
-//for (let i = 0; i < 10; i++) {
-//    let randLeft = getRndNumber(0, 7);
-//    let bombTime = getRndNumber(0, 5);
-//    setTimeout(function () {
-//        //        console.log("randLeft "+bombLocations[randLeft]+ " bombTimes "+bombTimes[bombTime]);
-//        bombs[i] = new Bomb(bombLocations[randLeft], -100, 1, "Images/bomb.png");
-//        $(bombs[i].Bird).addClass("bomb");
-//        $(bombs[i].Bird).on("click", function () {
-//            let jBomb = $(bombs[i].Bird);
-//            let bombLeft = parseInt(jBomb.css("left"));
-//            let bombTop = parseInt(jBomb.css("top"));
-//            //            console.log(bombLeft+" "+bombTop);
-//            console.log(jBomb);
-//            jBomb.attr("src", "../Images/bombExplode.gif")
-//            handleBomb(bombLeft, bombTop);
-//        });
-//        bombs = bombs[i].move(true, bombs);
-//        //        console.log(bombs);
-//    }, bombTimes[bombTime]);
-//
-//}
+let bombs = [];
+function GetBomb()
+{
+    let bombLocations = [100, 200, 300, 400, 500, 600, 700, 800];
+    let bombTimes = [4000, 1200, 3600, 6000, 5000];
+    
+    let j = 0;
+    let bombTime;
+    let preBombTime;
+    setInterval(function() {
+        let randLeft = getRndNumber(0, 7);
+        let bombTime = getRndNumber(0, 5);
+        setTimeout(function () {
+            //        console.log("randLeft "+bombLocations[randLeft]+ " bombTimes "+bombTimes[bombTime]);
+            bombs[i] = new Bomb(bombLocations[randLeft], -100, 1, "Images/bomb.png");
+            $(bombs[i].Bird).addClass("bomb");
+            $(bombs[i].Bird).on("click", function () {
+                let jBomb = $(bombs[i].Bird);
+                let bombLeft = parseInt(jBomb.css("left"));
+                let bombTop = parseInt(jBomb.css("top"));
+                //            console.log(bombLeft+" "+bombTop);
+                console.log(jBomb);
+                jBomb.attr("src", "../Images/bombExplode.gif")
+                handleBomb(bombLeft, bombTop);
+            });
+            bombs = bombs[i].move(true, bombs);
+            //        console.log(bombs);
+        }, bombTimes[bombTime]);
+     
+     },10000);
+}
+GetBomb();
 $("#game").on("click", function () {
     Sounds.shotSound.play();
 });
@@ -181,7 +186,7 @@ function winningModal() {
 }
 
 function timer() {
-    let duration = 60 * 1000;
+    // let duration = 60 * 1000;
     let st = new Date().getTime();
     $("#progressbar").css("width", "500");
     $("#progressbar").progressbar(100);
@@ -212,7 +217,7 @@ function endGame() {
         });
         winningModal();
         console.log("the End")
-    }, 5000);
+    }, duration);
     return endId;
 }
 

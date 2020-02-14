@@ -31,7 +31,13 @@ let endId;
 let level = 2;
 let duration=60 * 1000;
 let speed;
-initGame();
+
+$("#start").on("click", function () {
+    initGame();
+    $("#startWrapper").css("visibility", "hidden");
+    $("#start").css("visibility", "hidden");
+    
+});
 
 function initGame() {
     getPreviousScore();
@@ -47,7 +53,7 @@ function getPreviousScore() {
         currentPlayerId = currentPlayerInfo.id;
         score = parseInt(users[currentPlayerId].score);
         level = parseInt(currentPlayerInfo.level);
-//        console.log(level);
+        //        console.log(level);
         currentPlayer = new Player(currentPlayerInfo.name, score);
     } else {
         currentPlayer = new Player("Guest", score);
@@ -132,6 +138,7 @@ function GetBomb()
 $("#game").on("click", function () {
     Sounds.shotSound.play();
 });
+
 function handleBomb(bombLeft, bombTop) {
     $("img").toArray().forEach(function (item) {
         let birdLeft = parseInt($(item).css("left"));

@@ -53,10 +53,8 @@ input[name="username"]:focus {
     width: 154px;
     height: 86px;
     border: none;
-    opacity: .92;
+    opacity: .7;
     outline: none;
-
-
 }
 
 #level1 {

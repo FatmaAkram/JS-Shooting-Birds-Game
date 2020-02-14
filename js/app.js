@@ -28,13 +28,14 @@ let save = true;
 let users;
 let id, timerId;
 let endId;
+let level = 1;
 initGame();
 
 function initGame() {
     getPreviousScore();
     id = renderGame();
     timerId = timer();
-    endId =endGame();
+    endId = endGame();
 }
 
 function getPreviousScore() {
@@ -43,6 +44,8 @@ function getPreviousScore() {
     if (currentPlayerInfo != null) {
         currentPlayerId = currentPlayerInfo.id;
         score = parseInt(users[currentPlayerId].score);
+        level = parseInt(currentPlayerInfo.level);
+//        console.log(level);
         currentPlayer = new Player(currentPlayerInfo.name, score);
     } else {
         currentPlayer = new Player("Guest", score);
@@ -50,6 +53,8 @@ function getPreviousScore() {
     }
     $("label[name=playername]").text(currentPlayer.Name);
     $("label[name=score]").text(currentPlayer.Score);
+    $("label[name=level]").text(level);
+
 
 }
 
@@ -138,10 +143,8 @@ let preBombTime;
 $("#game").on("click", function () {
     Sounds.shotSound.play();
 });
-
 function handleBomb(bombLeft, bombTop) {
     $("img").toArray().forEach(function (item) {
-
         let birdLeft = parseInt($(item).css("left"));
         let birdTop = parseInt($(item).css("top"));
         //        console.log(birdLeft+" "+birdTop);
@@ -150,7 +153,6 @@ function handleBomb(bombLeft, bombTop) {
             $(item).css("background", "red");
             $(item).trigger("click");
         }
-        
     });
 }
 
@@ -196,7 +198,7 @@ function timer() {
 }
 //end game
 function endGame() {
-   let endId = setTimeout(function () {
+    let endId = setTimeout(function () {
         //stop birds appearance
         clearInterval(id);
         //stop timer

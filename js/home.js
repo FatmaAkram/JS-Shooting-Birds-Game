@@ -11,7 +11,6 @@ function login() {
         obj["name"] = newPlayer.value;
         obj["score"] = 0;
         prevPlayers.push(obj);
-        console.log(prevPlayers.length);
     } else {
         checkExist = prevPlayers.findIndex(player => player.name == newPlayer.value);
         if (checkExist == -1) { // If player doesn't exisy before added to users array

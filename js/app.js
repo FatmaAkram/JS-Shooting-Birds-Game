@@ -26,7 +26,7 @@ let currentPlayer;
 let currentPlayerId;
 let save = true;
 let users;
-let id, timerId,BombId;
+let id, timerId, BombId;
 let endId;
 let level = 2;
 let duration = 60 * 1000;
@@ -54,7 +54,6 @@ function getPreviousScore() {
         currentPlayerId = currentPlayerInfo.id;
         score = parseInt(users[currentPlayerId].score);
         level = parseInt(currentPlayerInfo.level);
-        //        console.log(level);
         currentPlayer = new Player(currentPlayerInfo.name, score);
     } else {
         currentPlayer = new Player("Guest", score);
@@ -63,10 +62,7 @@ function getPreviousScore() {
     $("label[name=playername]").text(currentPlayer.Name);
     $("label[name=score]").text(currentPlayer.Score);
     $("label[name=level]").text(level);
-
-
 }
-
 function renderGame() {
     if (level == 1)
         speed = 2;
@@ -94,14 +90,12 @@ function renderGame() {
                 break;
         }
         ducks[i].move(LeftRight[randLeftRight]);
-        //         console.log($(ducks[i].Bird));
         $(ducks[i].Bird).on("click", function () {
             countBirds++;
             updateScore($(this));
             $(this).fadeOut(1000);
-            console.log("countBirds " + countBirds);
             if (countBirds > 20) {
-               endAll();
+                endAll();
             }
         });
         i++;
@@ -110,46 +104,36 @@ function renderGame() {
     return id;
 }
 let bombs = [];
-
 function GetBomb() {
     let bombLocations = [100, 200, 300, 400, 500, 600, 700, 800, 1000];
     let bombTimes = [4000, 1200, 3600, 6000, 5000];
-
     let j = 0;
     let bombTime;
     let preBombTime;
-
-    BombId=setInterval(function() {
+    BombId = setInterval(function () {
         let randLeft = getRndNumber(0, 8);
         let bombTime = getRndNumber(0, 5);
         setTimeout(function () {
-            //        console.log("randLeft "+bombLocations[randLeft]+ " bombTimes "+bombTimes[bombTime]);
             bombs[i] = new Bomb(bombLocations[randLeft], -100, 1, "Images/bomb.png");
             $(bombs[i].Bird).addClass("bomb");
             $(bombs[i].Bird).on("click", function () {
-                let jBomb = $(bombs[i].Bird);
+                let jBomb = $(this);
                 let bombLeft = parseInt(jBomb.css("left"));
                 let bombTop = parseInt(jBomb.css("top"));
-                //            console.log(bombLeft+" "+bombTop);
-                console.log(jBomb);
                 jBomb.attr("src", "../Images/bombExplode.gif")
                 handleBomb(bombLeft, bombTop);
             });
             bombs = bombs[i].move(true, bombs);
-            //        console.log(bombs);
         }, bombTimes[bombTime]);
-
     }, 10000);
 }
 $("#game").on("click", function () {
     Sounds.shotSound.play();
 });
-
 function handleBomb(bombLeft, bombTop) {
     $("img").toArray().forEach(function (item) {
         let birdLeft = parseInt($(item).css("left"));
         let birdTop = parseInt($(item).css("top"));
-        //        console.log(birdLeft+" "+birdTop);
         if (birdLeft > bombLeft && birdLeft < bombLeft + 300 &&
             birdTop > bombTop && birdTop < bombTop + 300) {
             $(item).css("background", "red");
@@ -157,7 +141,6 @@ function handleBomb(bombLeft, bombTop) {
         }
     });
 }
-
 function updateScore(clickedBird) {
     if (clickedBird.hasClass("normalBird")) {
         currentPlayer.Score += 5;
@@ -175,13 +158,11 @@ function updateScore(clickedBird) {
         currentPlayer.saveData(users, currentPlayerId);
     }
 }
-
 function winningModal() {
     $("#container").css("visibility", "visible");
     $("#contents").css("visibility", "visible");
     $("p").innerText += score;
 }
-
 function timer() {
     // let duration = 60 * 1000;
     let st = new Date().getTime();
@@ -205,24 +186,18 @@ function endGame() {
     }, duration);
     return endId;
 }
-
-function endAll(){
-   //stop birds appearance
-        clearInterval(id);
-        //stop timer
-        clearInterval(timerId);
-        //stop moving birds
-        //    ducks.forEach(element => {
-        //        element.flag = false;
-        //    });
-        clearInterval(BombId);
-        bombs.forEach(element => {
-            element.flag = false;
-        });
-        winningModal();
-        console.log("the End") 
+function endAll() {
+    //stop birds appearance
+    clearInterval(id);
+    //stop timer
+    clearInterval(timerId);
+    //stop moving bombs
+    clearInterval(BombId);
+    bombs.forEach(element => {
+        element.flag = false;
+    });
+    winningModal();
 }
-
 $("#home").on("click", function () {
     window.location.href = "index.html";
 });

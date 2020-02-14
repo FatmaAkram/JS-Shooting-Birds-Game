@@ -17,8 +17,6 @@ class Bird extends MovableObject {
         var request;
         var lastTime = Date.now();
         var game = document.getElementById("game");
-        // console.log(game);
-        // console.log(bird);
         if (RandLeftRight === "left") {
             left = parseInt(bird.style.left);
         } else if (RandLeftRight === "right") {
@@ -28,8 +26,6 @@ class Bird extends MovableObject {
         }
         function birdsMovement() {
             var now = Date.now();
-            // console.log(game);
-            // console.log(bird.parentNode);
             var dt = (now - lastTime) / 1000.0;
             var top = parseInt(bird.style.top);
             if (RandLeftRight == "left") {
@@ -66,7 +62,6 @@ class Bird extends MovableObject {
                     }
                 }
             }
-
             if (top > height - 100) {
                 window.cancelAnimationFrame(request);
                 if (bird.parentNode != null)

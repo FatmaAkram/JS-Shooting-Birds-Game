@@ -1,6 +1,5 @@
 body {
     background: url(../Images/Hbg.png);
-    /*    background-size: cover;*/
     font-family: fantasy;
     color: white;
     font-size: 30px;
@@ -17,9 +16,7 @@ body {
     width: 366px;
     margin-top: 5%;
     padding: 50px;
-    /*    padding-top: 100px;*/
     height: 433px;
-    /*    background-color: red;*/
     background: url(../Images/modal.svg);
     background-size: cover;
     text-align: center;
@@ -30,7 +27,6 @@ input[name="username"] {
     height: 40px;
     border-radius: 50px;
     border: none;
-    /*    box-shadow: #073d6f 5px 5px 5px;*/
     margin: 10px 0;
     padding-left: 20px;
     font-size: 20px;

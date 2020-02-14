@@ -7,6 +7,9 @@ import {
 import {
     Sounds
 } from "./Sounds.js";
+import {
+    Bomb
+} from "./Bomb.js";
 
 function getRndNumber(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
@@ -23,11 +26,14 @@ let currentPlayer;
 let currentPlayerId;
 let save = true;
 let users;
-initGame();
+let id, timerId;
+let flag =
+    initGame();
+
 function initGame() {
     getPreviousScore();
-    let id = renderGame();
-    var timerId = timer();
+    id = renderGame();
+    timerId = timer();
 }
 
 function getPreviousScore() {
@@ -72,12 +78,23 @@ function renderGame() {
     }, 1000);
     return id;
 }
+let bombLocations = [100, 200, 300, 400, 500, 600, 700, 800];
+let bombTimes = [4000, 12000, 36000, 60000, 50000];
+let bombs = [];
+for (let i = 0; i < 5; i++) {
+    let randLeft = getRndNumber(0, 7);
+    let bombTime = getRndNumber(0, 5);
+    setTimeout(function () {
+        //        console.log("randLeft "+bombLocations[randLeft]+ " bombTimes "+bombTimes[bombTime]);
+        bombs[i] = new Bomb(bombLocations[randLeft], -100, 2, "Images/bomb.png");
+        bombs[i].Bird.classList.add("bomb");
+        bombs = bombs[i].move(true, bombs);
+        //        console.log(bombs);
+    }, bombTimes[bombTime]);
+
+}
 $("#game").on("click", function () {
     Sounds.shotSound.play();
-    let currentBirds = $("img");
-    for (let i = 0; i < ducks.length; i++) {
-        console.log(ducks[i]);
-    }
 });
 $("#game").on("click", "img", function () {
     updateScore($(this));
@@ -97,12 +114,20 @@ function updateScore(clickedBird) {
     } else if (clickedBird.hasClass("blackBird")) {
         currentPlayer.Score -= 10;
         Sounds.blackShot.play();
+
     }
     $("label[name=score]").text(currentPlayer.Score);
     if (save) {
         currentPlayer.saveData(users, currentPlayerId);
     }
 }
+
+function winningModal() {
+    $("#container").css("visibility", "visible");
+    $("#contents").css("visibility", "visible");
+    $("p").innerText += score;
+}
+
 function timer() {
     let duration = 60 * 1000;
     let st = new Date().getTime();
@@ -119,3 +144,19 @@ function timer() {
     }, 100);
     return id;
 }
+//end game
+setTimeout(function () {
+    //stop birds appearance
+    clearInterval(id);
+    //stop timer
+    clearInterval(timerId);
+    //stop moving birds
+    //    ducks.forEach(element => {
+    //        element.flag = false;
+    //    });
+    bombs.forEach(element => {
+        element.flag = false;
+    });
+    winningModal();
+    console.log("the End")
+}, 60000)

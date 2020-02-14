@@ -3,7 +3,7 @@ Let's go for hunting :D
 
 ## How to play?
 - Clone/Download the project & Open index.html `(Live Server)`; 
-- Or, you can simply play online : [Live Preview](https://yuryletta.github.io/ShootingBirds/)
+- Or, you can simply play online : [Live Preview](https://yuryletta.github.io/ShootingBirds/index.html)
 - Login with your name and choose a level 
 - Click start icon when you are ready to play
 - Start Shooting :D 

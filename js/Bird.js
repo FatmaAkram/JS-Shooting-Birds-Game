@@ -41,7 +41,7 @@ class Bird extends MovableObject {
                 left += 100 * speed * dt;
                 if (left > 200)
                 {
-                    top += 20 * speed * dt;
+                    top += 30 * speed * dt;
                     if(top >= height)
                     {
                         window.cancelAnimationFrame(request);
@@ -57,7 +57,7 @@ class Bird extends MovableObject {
                 }
                 left -= 100 * speed * dt;
                 if (left < 300) {
-                    top += 20 * speed * dt;
+                    top += 30 * speed * dt;
                     if(top >= height)
                     {
                         window.cancelAnimationFrame(request);

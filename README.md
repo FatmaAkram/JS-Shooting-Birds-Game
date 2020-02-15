@@ -13,7 +13,7 @@ Let's go for hunting :D
 - Move the gun using mouse and shoot using the mouse click.
 - Killing normal birds will add 5 to user’s score.
 - Killing Black birds will remove 10 from user’s score
-- Killing Golden birds will remove 10 from user’s score
+- Killing Golden birds will add 10 to user’s score
 - A bomb that will falling from the sky will remove surrounding birds
 if the user shoot that bomb between birds and add a score value
 to user’s score depending on bird type 
